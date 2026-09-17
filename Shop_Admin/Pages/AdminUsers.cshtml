@@ -1,0 +1,784 @@
+﻿@page
+@model Shop_Admin.Pages.AdminUsersModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Admin Users - Shop Admin</title>
+
+    <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                background: #f5f7fb;
+                color: #1f2937;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 240px;
+                height: 100vh;
+                background: #111827;
+                color: white;
+                padding: 25px 15px;
+            }
+
+            .logo {
+                font-size: 24px;
+                font-weight: bold;
+                padding: 0 15px 30px;
+            }
+
+                .logo span {
+                    color: #60a5fa;
+                }
+
+            .menu-title {
+                color: #9ca3af;
+                font-size: 12px;
+                text-transform: uppercase;
+                padding: 0 15px 10px;
+            }
+
+            .menu a {
+                display: block;
+                color: #d1d5db;
+                text-decoration: none;
+                padding: 13px 15px;
+                border-radius: 8px;
+                margin-bottom: 5px;
+                font-size: 14px;
+            }
+
+                .menu a:hover {
+                    background: #1f2937;
+                    color: white;
+                }
+
+                .menu a.active {
+                    background: #2563eb;
+                    color: white;
+                }
+
+            .main {
+                margin-left: 240px;
+                min-height: 100vh;
+            }
+
+            .topbar {
+                height: 70px;
+                background: white;
+                border-bottom: 1px solid #e5e7eb;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 30px;
+            }
+
+            .page-title {
+                font-size: 22px;
+                font-weight: bold;
+            }
+
+            .administrator {
+                font-size: 14px;
+                color: #6b7280;
+            }
+
+            .content {
+                padding: 30px;
+            }
+
+            .header-row {
+                margin-bottom: 25px;
+            }
+
+                .header-row h1 {
+                    margin: 0;
+                    font-size: 26px;
+                }
+
+                .header-row p {
+                    margin: 6px 0 0;
+                    color: #6b7280;
+                    font-size: 14px;
+                }
+
+            .filter-card,
+            .form-card,
+            .table-card {
+                background: white;
+                border: 1px solid #e5e7eb;
+                border-radius: 12px;
+                margin-bottom: 25px;
+            }
+
+            .filter-card {
+                padding: 20px;
+            }
+
+            .filter-title,
+            .form-title {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 18px;
+            }
+
+            .filter-form {
+                display: flex;
+                gap: 10px;
+                width: 100%;
+            }
+
+            .search-input {
+                flex: 1;
+                padding: 11px 13px;
+                border: 1px solid #d1d5db;
+                border-radius: 7px;
+                font-size: 14px;
+                outline: none;
+            }
+
+                .search-input:focus {
+                    border-color: #2563eb;
+                }
+
+            .search-button {
+                background: #2563eb;
+                color: white;
+                border: none;
+                padding: 11px 22px;
+                border-radius: 7px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+                .search-button:hover {
+                    background: #1d4ed8;
+                }
+
+            .clear-button {
+                background: #f3f4f6;
+                color: #374151;
+                padding: 11px 18px;
+                border-radius: 7px;
+                text-decoration: none;
+                font-size: 14px;
+            }
+
+                .clear-button:hover {
+                    background: #e5e7eb;
+                }
+
+            .form-card {
+                padding: 25px;
+            }
+
+            .form-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 18px;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 7px;
+                font-size: 13px;
+                font-weight: bold;
+            }
+
+            .form-group input,
+            .form-group select {
+                width: 100%;
+                padding: 11px 12px;
+                border: 1px solid #d1d5db;
+                border-radius: 7px;
+                font-size: 14px;
+                background: white;
+            }
+
+                .form-group input:focus,
+                .form-group select:focus {
+                    outline: none;
+                    border-color: #2563eb;
+                }
+
+            .form-actions {
+                margin-top: 20px;
+            }
+
+            .save-button {
+                background: #2563eb;
+                color: white;
+                border: none;
+                padding: 11px 20px;
+                border-radius: 7px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+                .save-button:hover {
+                    background: #1d4ed8;
+                }
+
+            .table-card {
+                overflow: hidden;
+            }
+
+            .table-header {
+                padding: 20px;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+                .table-header h2 {
+                    margin: 0;
+                    font-size: 18px;
+                }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                min-width: 1000px;
+            }
+
+            th {
+                background: #f9fafb;
+                color: #6b7280;
+                font-size: 12px;
+                text-transform: uppercase;
+                text-align: left;
+                padding: 14px 18px;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            td {
+                padding: 15px 18px;
+                border-bottom: 1px solid #f0f0f0;
+                font-size: 14px;
+            }
+
+            tr:last-child td {
+                border-bottom: none;
+            }
+
+            .admin-name {
+                font-weight: bold;
+            }
+
+            .gender {
+                display: inline-block;
+                padding: 5px 9px;
+                border-radius: 20px;
+                font-size: 12px;
+                background: #f3f4f6;
+            }
+
+            .status {
+                display: inline-block;
+                padding: 5px 10px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: bold;
+            }
+
+                .status.active {
+                    background: #dcfce7;
+                    color: #166534;
+                }
+
+                .status.inactive {
+                    background: #fee2e2;
+                    color: #991b1b;
+                }
+
+            .actions {
+                display: flex;
+                gap: 7px;
+            }
+
+            .action-button {
+                border: none;
+                padding: 7px 11px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 12px;
+                text-decoration: none;
+            }
+
+            .edit {
+                background: #dbeafe;
+                color: #1d4ed8;
+            }
+
+            .toggle {
+                background: #fef3c7;
+                color: #92400e;
+            }
+
+            .delete {
+                background: #fee2e2;
+                color: #b91c1c;
+            }
+
+            .error-summary {
+                color: #b91c1c;
+                background: #fee2e2;
+                padding: 12px;
+                border-radius: 7px;
+                margin-bottom: 15px;
+            }
+
+            .empty {
+                text-align: center;
+                padding: 35px;
+                color: #6b7280;
+            }
+
+            @@media (max-width: 900px) {
+                .form-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            @@media (max-width: 700px) {
+                .sidebar {
+                    position: relative;
+                    width: 100%;
+                    height: auto;
+                }
+
+                .main {
+                    margin-left: 0;
+                }
+
+                .filter-form {
+                    flex-direction: column;
+                }
+
+                .content {
+                    padding: 15px;
+                }
+            }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            Shop <span>Admin</span>
+        </div>
+
+        <div class="menu-title">
+            Main Menu
+        </div>
+
+        <nav class="menu">
+
+            <a href="/Dashboard">
+                Dashboard
+            </a>
+
+            <a href="/AdminUsers" class="active">
+                Admin Users
+            </a>
+
+            <a href="/Teachers">
+                Teachers
+            </a>
+
+            <a href="/Login">
+                Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+
+            <div class="page-title">
+                Admin Users
+            </div>
+
+            <div class="administrator">
+                Administrator
+            </div>
+
+        </div>
+
+        <div class="content">
+
+            <div class="header-row">
+
+                <h1>
+                    Admin Users
+                </h1>
+
+                <p>
+                    Manage administrator accounts.
+                </p>
+
+            </div>
+
+            <div class="filter-card">
+
+                <div class="filter-title">
+                    Filter Admins
+                </div>
+
+                <form method="get"
+                      action="/AdminUsers"
+                      class="filter-form">
+
+                    <input type="text"
+                           name="Search"
+                           value="@Model.Search"
+                           class="search-input"
+                           placeholder="Search by name, username or email..." />
+
+                    <button type="submit"
+                            class="search-button">
+                        Search
+                    </button>
+
+                    <a href="/AdminUsers"
+                       class="clear-button">
+                        Clear
+                    </a>
+
+                </form>
+
+            </div>
+
+            <div class="form-card">
+
+                <div class="form-title">
+                    Add Admin
+                </div>
+
+                <form method="post"
+                      action="/AdminUsers?handler=Add">
+
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="error-summary">
+                    </div>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>
+                                First Name
+                            </label>
+
+                            <input asp-for="FirstName"
+                                   type="text"
+                                   placeholder="Enter first name" />
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>
+                                Last Name
+                            </label>
+
+                            <input asp-for="LastName"
+                                   type="text"
+                                   placeholder="Enter last name" />
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>
+                                Username
+                            </label>
+
+                            <input asp-for="Username"
+                                   type="text"
+                                   placeholder="Enter username" />
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>
+                                Email
+                            </label>
+
+                            <input asp-for="Email"
+                                   type="email"
+                                   placeholder="admin@example.com" />
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>
+                                Password
+                            </label>
+
+                            <input asp-for="Password"
+                                   type="password"
+                                   placeholder="Enter password" />
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>
+                                Gender
+                            </label>
+
+                            <select asp-for="Gender">
+
+                                <option value="Male">
+                                    Male
+                                </option>
+
+                                <option value="Female">
+                                    Female
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+
+                        <button type="submit"
+                                class="save-button">
+
+                            Add Admin
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="table-card">
+
+                <div class="table-header">
+
+                    <h2>
+                        Admin Users List
+                    </h2>
+
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    ID
+                                </th>
+
+                                <th>
+                                    First Name
+                                </th>
+
+                                <th>
+                                    Last Name
+                                </th>
+
+                                <th>
+                                    Username
+                                </th>
+
+                                <th>
+                                    Email
+                                </th>
+
+                                <th>
+                                    Gender
+                                </th>
+
+                                <th>
+                                    Created At
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Actions
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @if (Model.AdminUsers.Count == 0)
+                            {
+                                <tr>
+
+                                    <td colspan="9"
+                                        class="empty">
+
+                                        No admin users found.
+
+                                    </td>
+
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var admin in Model.AdminUsers)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @admin.Id
+                                        </td>
+
+                                        <td class="admin-name">
+                                            @admin.FirstName
+                                        </td>
+
+                                        <td>
+                                            @admin.LastName
+                                        </td>
+
+                                        <td>
+                                            @admin.Username
+                                        </td>
+
+                                        <td>
+                                            @admin.Email
+                                        </td>
+
+                                        <td>
+
+                                            <span class="gender">
+                                                @admin.Gender
+                                            </span>
+
+                                        </td>
+
+                                        <td>
+                                            @admin.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+                                        </td>
+
+                                        <td>
+
+                                            @if (admin.Status == "Active")
+                                            {
+                                                <span class="status active">
+                                                    Active
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="status inactive">
+                                                    Inactive
+                                                </span>
+                                            }
+
+                                        </td>
+
+                                        <td>
+
+                                            <div class="actions">
+
+                                                <a href="/EditAdmin/@admin.Id"
+                                                   class="action-button edit">
+                                                    Edit
+                                                </a>
+
+                                                <form method="post"
+                                                      action="/AdminUsers?handler=ToggleStatus"
+                                                      style="display:inline;">
+
+                                                    @Html.AntiForgeryToken()
+
+                                                    <input type="hidden"
+                                                           name="ToggleId"
+                                                           value="@admin.Id" />
+
+                                                    <button type="submit"
+                                                            class="action-button toggle">
+
+                                                        @(admin.Status == "Active"
+                                                            ? "Disable"
+                                                            : "Enable")
+
+                                                    </button>
+
+                                                </form>
+
+                                                <form method="post"
+                                                      action="/AdminUsers?handler=Delete"
+                                                      style="display:inline;"
+                                                      onsubmit="return confirm('Are you sure you want to delete this admin?');">
+
+                                                    @Html.AntiForgeryToken()
+
+                                                    <input type="hidden"
+                                                           name="DeleteId"
+                                                           value="@admin.Id" />
+
+                                                    <button type="submit"
+                                                            class="action-button delete">
+
+                                                        Delete
+
+                                                    </button>
+
+                                                </form>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

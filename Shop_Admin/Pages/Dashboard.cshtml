@@ -1,0 +1,276 @@
+﻿@page
+@model Shop_Admin.Pages.DashboardModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Shop Admin</title>
+
+    <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                background: #f5f7fb;
+                color: #1f2937;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 240px;
+                height: 100vh;
+                background: #111827;
+                color: white;
+                padding: 25px 15px;
+            }
+
+            .logo {
+                font-size: 24px;
+                font-weight: bold;
+                padding: 0 15px 30px;
+            }
+
+                .logo span {
+                    color: #60a5fa;
+                }
+
+            .menu-title {
+                color: #9ca3af;
+                font-size: 12px;
+                text-transform: uppercase;
+                padding: 0 15px 10px;
+            }
+
+            .menu a {
+                display: block;
+                color: #d1d5db;
+                text-decoration: none;
+                padding: 13px 15px;
+                border-radius: 8px;
+                margin-bottom: 5px;
+                font-size: 14px;
+            }
+
+                .menu a:hover {
+                    background: #1f2937;
+                    color: white;
+                }
+
+                .menu a.active {
+                    background: #2563eb;
+                    color: white;
+                }
+
+            .main {
+                margin-left: 240px;
+                min-height: 100vh;
+            }
+
+            .topbar {
+                height: 70px;
+                background: white;
+                border-bottom: 1px solid #e5e7eb;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 30px;
+            }
+
+            .page-title {
+                font-size: 22px;
+                font-weight: bold;
+            }
+
+            .administrator {
+                font-size: 14px;
+                color: #6b7280;
+            }
+
+            .content {
+                padding: 30px;
+            }
+
+            .welcome {
+                background: white;
+                border: 1px solid #e5e7eb;
+                border-radius: 12px;
+                padding: 30px;
+                margin-bottom: 25px;
+            }
+
+                .welcome h1 {
+                    margin: 0;
+                    font-size: 28px;
+                }
+
+                .welcome p {
+                    color: #6b7280;
+                    margin-top: 10px;
+                }
+
+            .cards {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .card {
+                background: white;
+                border: 1px solid #e5e7eb;
+                border-radius: 12px;
+                padding: 25px;
+            }
+
+                .card h2 {
+                    margin: 0 0 10px;
+                    font-size: 18px;
+                }
+
+                .card p {
+                    margin: 0;
+                    color: #6b7280;
+                    font-size: 14px;
+                }
+
+                .card a {
+                    display: inline-block;
+                    margin-top: 18px;
+                    color: #2563eb;
+                    text-decoration: none;
+                    font-size: 14px;
+                    font-weight: bold;
+                }
+
+            @@media (max-width: 700px) {
+                .sidebar {
+                    position: relative;
+                    width: 100%;
+                    height: auto;
+                }
+
+                .main {
+                    margin-left: 0;
+                }
+
+                .cards {
+                    grid-template-columns: 1fr;
+                }
+
+                .content {
+                    padding: 15px;
+                }
+            }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            Shop <span>Admin</span>
+        </div>
+
+        <div class="menu-title">
+            Main Menu
+        </div>
+
+        <nav class="menu">
+
+            <a href="/Dashboard" class="active">
+                Dashboard
+            </a>
+
+            <a href="/AdminUsers">
+                Admin Users
+            </a>
+
+            <a href="/Teachers">
+                Teachers
+            </a>
+
+            <a href="/Login">
+                Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+
+            <div class="page-title">
+                Dashboard
+            </div>
+
+            <div class="administrator">
+                Administrator
+            </div>
+
+        </div>
+
+        <div class="content">
+
+            <div class="welcome">
+
+                <h1>
+                    Welcome to Shop Admin
+                </h1>
+
+                <p>
+                    Manage your administration system from here.
+                </p>
+
+            </div>
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <h2>
+                        Admin Users
+                    </h2>
+
+                    <p>
+                        Manage administrator accounts and their status.
+                    </p>
+
+                    <a href="/AdminUsers">
+                        Manage Admin Users
+                    </a>
+
+                </div>
+
+                <div class="card">
+
+                    <h2>
+                        Teachers
+                    </h2>
+
+                    <p>
+                        Manage teachers and their accounts.
+                    </p>
+
+                    <a href="/Teachers">
+                        Manage Teachers
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

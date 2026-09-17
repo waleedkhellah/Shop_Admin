@@ -1,0 +1,171 @@
+﻿@page
+@model Shop_Admin.Pages.LoginModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>Shop Admin - Login</title>
+
+    <style>
+
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+                background: #f4f6f9;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .login-box {
+                width: 390px;
+                background: white;
+                padding: 40px;
+                border-radius: 12px;
+                box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+            }
+
+            .logo {
+                text-align: center;
+                font-size: 30px;
+                font-weight: bold;
+                color: #222;
+                margin-bottom: 8px;
+            }
+
+            .subtitle {
+                text-align: center;
+                color: #777;
+                margin-bottom: 30px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            label {
+                display: block;
+                font-weight: 600;
+                margin-bottom: 8px;
+                color: #333;
+            }
+
+            input {
+                width: 100%;
+                padding: 13px 14px;
+                border: 1px solid #ddd;
+                border-radius: 7px;
+                font-size: 15px;
+            }
+
+                input:focus {
+                    outline: none;
+                    border-color: #555;
+                }
+
+            .login-button {
+                width: 100%;
+                padding: 13px;
+                border: none;
+                border-radius: 7px;
+                background: #222;
+                color: white;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+                .login-button:hover {
+                    background: #000;
+                }
+
+            .error {
+                background: #ffecec;
+                color: #c62828;
+                padding: 10px;
+                border-radius: 6px;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <div class="logo">
+            Shop Admin
+        </div>
+
+        <div class="subtitle">
+            Administrator Login
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="error">
+                @Model.ErrorMessage
+            </div>
+        }
+
+        <form method="post">
+
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+
+                <label for="Username">
+                    Username
+                </label>
+
+                <input id="Username"
+                       type="text"
+                       asp-for="Username"
+                       placeholder="Enter username"
+                       required />
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="Password">
+                    Password
+                </label>
+
+                <input id="Password"
+                       type="password"
+                       asp-for="Password"
+                       placeholder="Enter password"
+                       required />
+
+            </div>
+
+            <button type="submit"
+                    class="login-button">
+
+                Login
+
+            </button>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>
